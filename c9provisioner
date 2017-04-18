@@ -11,4 +11,4 @@ ______               _     _
 echo
 echo
 echo "Updating apt repos"
-sudo apt update
+apt update
