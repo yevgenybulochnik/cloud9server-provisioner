@@ -12,3 +12,10 @@ echo
 echo
 echo "Updating apt repos"
 apt update
+
+echo 
+echo 
+echo "Adding New User"
+useradd -m  yevgeny "-m creates a user directory in home/" 
+echo "Adding New User to superuser group"
+usermod -aG sudo yevgeny
