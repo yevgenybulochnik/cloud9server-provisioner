@@ -23,7 +23,7 @@ apt install vim -y
 
 echo 
 echo "Adding New User"
-adduser --disabled-password -gecos "" yevgeny
+adduser --disabled-password --gecos "" yevgeny
 echo "Adding New User to superuser group"
 usermod -aG sudo yevgeny
 
