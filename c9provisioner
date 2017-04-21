@@ -10,12 +10,29 @@ ______               _     _
 
 echo
 echo
+echo "Adding Vim 8.0 PPA"
+add-apt-repository ppa:jonathonf/vim
+
+echo
 echo "Updating apt repos"
 apt update
 
-echo 
+echo
+echo "Installing Vim 8.0"
+apt install vim -y
+
 echo 
 echo "Adding New User"
 adduser --disabled-password -gecos "" yevgeny
 echo "Adding New User to superuser group"
 usermod -aG sudo yevgeny
+
+echo "Cloning dotfiles with https and setting symlinks"
+su yevgeny <<Commands
+git clone https://github.com/yevgenybulochnik/dotfiles.git ~/workspace/dotfiles
+ln -s ~/workspace/dotfiles/.vimrc ~
+ln -s ~/workspace/dotfiles/.gitconfig ~
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+Commands
+
+su yevgeny -c "vim +PluginInstall +qall" #Note: command does run correctly in a heredoc
