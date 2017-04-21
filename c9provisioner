@@ -16,6 +16,6 @@ apt update
 echo 
 echo 
 echo "Adding New User"
-useradd -m  yevgeny  
+adduser --disabled-password -gecos "" yevgeny
 echo "Adding New User to superuser group"
 usermod -aG sudo yevgeny
