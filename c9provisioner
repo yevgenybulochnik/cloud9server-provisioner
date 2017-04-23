@@ -27,6 +27,20 @@ adduser --disabled-password --gecos "" yevgeny
 echo "Adding New User to superuser group"
 usermod -aG sudo yevgeny
 
+echo
+echo "Installing NPM"
+apt install npm -y
+
+echo
+echo "Installing N"
+npm install -g n
+
+echo
+echo "Instaling Latest Node version"
+n latest
+npm --version
+node --version
+
 echo "Cloning dotfiles with https and setting symlinks"
 su yevgeny <<Commands
 git clone https://github.com/yevgenybulochnik/dotfiles.git ~/workspace/dotfiles
