@@ -50,3 +50,5 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 Commands
 
 su yevgeny -c "vim +PluginInstall +qall" #Note: command does run correctly in a heredoc
+
+su yevgeny -c "git clone git://github.com/c9/core.git ~/c9sdk"
