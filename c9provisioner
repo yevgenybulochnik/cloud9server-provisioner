@@ -41,6 +41,11 @@ n latest
 npm --version
 node --version
 
+echo
+echo "Installing Apache"
+apt install apache2 -y
+
+echo
 echo "Cloning dotfiles with https and setting symlinks"
 su yevgeny <<Commands
 git clone https://github.com/yevgenybulochnik/dotfiles.git ~/workspace/dotfiles
