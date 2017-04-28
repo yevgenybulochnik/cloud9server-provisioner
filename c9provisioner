@@ -26,6 +26,7 @@ echo "Adding New User"
 adduser --disabled-password --gecos "" yevgeny
 echo "Adding New User to superuser group"
 usermod -aG sudo yevgeny
+echo "yevgeny ALL=(ALL) NOPASSWD:ALL" >>  /etc/sudoers #passwordless sudo
 
 echo
 echo "Installing NPM"
@@ -42,8 +43,26 @@ npm --version
 node --version
 
 echo
-echo "Installing Apache"
+echo "Installing Apache and Configuring"
 apt install apache2 -y
+a2dissite 000-default.conf
+a2enmod proxy
+a2enmod proxy_http
+mkdir /var/www/bulochnik.com
+echo "
+<VirtualHost *:80>
+    ServerName bulochnik.com
+    DocumentRoot /var/www/bulochnik.com
+</VirtualHost>" > /etc/apache2/sites-available/bulochnik.com.conf
+echo "
+<VirtualHost *:80>
+    ServerName dev.bulochnik.com
+    ProxyPreserveHost On
+    ProxyPass / http://localhost:8181/
+    ProxyPassReverse / http://localhost:8181/
+</VirtualHost> " > /etc/apache2/sites-available/dev.bulochnik.com.conf
+a2ensite bulochnik.com.conf
+a2ensite dev.bulochnik.com.conf
 
 echo
 echo "Cloning dotfiles with https and setting symlinks"
