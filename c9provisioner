@@ -43,6 +43,10 @@ npm --version
 node --version
 
 echo
+echo "Installing PM2"
+npm install -g pm2
+
+echo
 echo "Installing Apache and Configuring"
 apt install apache2 -y
 a2dissite 000-default.conf
@@ -60,9 +64,18 @@ echo "
     ProxyPreserveHost On
     ProxyPass / http://localhost:8181/
     ProxyPassReverse / http://localhost:8181/
-</VirtualHost> " > /etc/apache2/sites-available/dev.bulochnik.com.conf
+</VirtualHost>" > /etc/apache2/sites-available/dev.bulochnik.com.conf
+echo "
+<VirtualHost *:80>
+    ServerName preview.bulochnik.com
+    ProxyPreserveHost On
+    ProxyPass / http://localhost:4200/
+    ProxyPassReverse / http://localhost:4200/
+</VirtualHost>" > /etc/apache2/sites-available/preview.bulochnik.com.conf
 a2ensite bulochnik.com.conf
 a2ensite dev.bulochnik.com.conf
+a2ensite preview.bulochnik.com.conf
+service apache2 restart
 
 echo
 echo "Cloning dotfiles with https and setting symlinks"
@@ -78,3 +91,6 @@ su yevgeny -c "vim +PluginInstall +qall" #Note: command does run correctly in a 
 su yevgeny -c "git clone git://github.com/c9/core.git ~/c9sdk"
 
 su yevgeny -c "~/c9sdk/scripts/install-sdk.sh*"
+
+su yevgeny -c "mkdir ~/.ssh"
+su yevgeny -c "curl https://github.com/yevgenybulochnik.keys > ~/.ssh/authorized_keys"
